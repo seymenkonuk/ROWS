@@ -46,7 +46,7 @@ Oyun alanında iki zemin türü bulunur:
 - **Orman**: Serbestçe yürüyebileceğin güvenli alanlar.
 - **Buz**: Üzerinden geçtikçe eriyen ve bir daha adım atılamayan zeminler.
 
-[OYUN VİDEO]
+[[Oynanış Videosu]](https://github.com/user-attachments/assets/27f34f8b-76a2-4102-bd1e-3fae5ff327b1)
 
 <p align="right">(<a href="#ROWS">back to top</a>)</p>
 
