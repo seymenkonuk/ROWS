@@ -1,0 +1,128 @@
+openapi: 3.0.0
+info:
+  title: ROWS Game - MQTT Auth API
+  description: MQTT authentication ve authorization için kullanılan bir API.
+  version: v1
+paths:
+  /auth/user:
+    post:
+      summary: kullanıcı doğrulama
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: kullanıcının token'ı
+                password:
+                  type: string
+                  description: her zaman boş string olmalıdır
+                clientid:
+                  type: string
+                  description: client id
+              required:
+                - username
+                - password
+                - clientid
+      responses:
+        '200':
+          description: "Başarılı"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  allow:
+                    type: boolean
+        '401':
+          description: "Başarısız"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  allow:
+                    type: boolean
+  /auth/superuser:
+    post:
+      summary: kullanıcı super user mi?
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: kullanıcının token'ı
+              required:
+                - username
+      responses:
+        '200':
+          description: "Başarılı"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  allow:
+                    type: boolean
+        '403':
+          description: "Başarısız"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  allow:
+                    type: boolean
+  /auth/acl:
+    post:
+      summary: kullanıcı yetkili mi?
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: kullanıcının token'ı
+                clientid:
+                  type: string
+                  description: client id
+                topic:
+                  type: string
+                  description: topic name
+                acc:
+                  type: integer
+                  description: acc type (SUB/PUB)
+              required:
+                - username
+                - clientid
+                - topic
+                - acc
+      responses:
+        '200':
+          description: "Başarılı"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  allow:
+                    type: boolean
+        '403':
+          description: "Başarısız"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  allow:
+                    type: boolean

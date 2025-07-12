@@ -1,0 +1,17 @@
+RewriteEngine 	On
+
+# 	Auth
+
+RewriteCond		%{REQUEST_METHOD} 	^POST$
+RewriteRule		^auth/user$              	  	 	 	 	 	 	index.php?controller=Auth&action=Authentication 	 	  	 	 	 	 	 	 	 	[L]
+
+RewriteCond		%{REQUEST_METHOD} 	^POST$
+RewriteRule		^auth/superuser$ 	 	 	 	 	 	 	 	 	index.php?controller=Auth&action=IsSuperUser 	 	 	 	 	 	 	 	 	 	 	[L]
+
+RewriteCond		%{REQUEST_METHOD} 	^POST$
+RewriteRule		^auth/acl$ 	 	 	 	         	 	 	 	 	index.php?controller=Auth&action=Authorization 	 	 	 	 	 	 	 	 	 	 	[L]
+
+#   Hiçbiri Çalışmadıysa 404 Error Page
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ /404.php [QSA,L]

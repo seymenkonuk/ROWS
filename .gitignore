@@ -1,0 +1,9 @@
+other/
+
+**/.env
+**/*.env
+
+config/certs/**
+!config/certs/.gitkeep
+
+docs/videos/game.mp4

@@ -1,0 +1,15 @@
+[ req ]
+default_md          = sha256
+distinguished_name  = dn
+x509_extensions     = v3_client
+prompt              = no
+
+[ dn ]
+CN = 7L66FY0H8TDQMAF0KU
+
+[ v3_client ]
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = CA:FALSE
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = clientAuth

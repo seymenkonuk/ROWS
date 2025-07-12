@@ -1,0 +1,1 @@
+RSA sertifika kullanımında RAM yetersiz gelmesi sebebiyle ECC sertifika kullanılması tavsiye edilir.

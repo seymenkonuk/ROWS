@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  client-api:
+    build: .
+    container_name: client-api-container
+    restart: always
+    env_file:
+      - ../../config/env/.env
+    ports:
+      - "3000:80"
+    volumes:
+      - ./src/Public:/var/www/html
+      - ./src/Api:/var/www/Api
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true

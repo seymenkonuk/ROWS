@@ -1,0 +1,6 @@
+openapi: 3.0.0
+info:
+  title: ROWS Game - Client API
+  description: Mobil uygulama ve ileride web uygulamasının kullanacağı API. Veli, öğretmen, öğrenci, sınıf, görev gibi temel işlemler.
+  version: v1
+paths:

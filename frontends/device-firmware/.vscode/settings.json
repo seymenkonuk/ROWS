@@ -1,0 +1,13 @@
+{
+  "C_Cpp.clang_format_style": "file", // varsa .clang-format dosyasını kullanır
+  "C_Cpp.clang_format_fallbackStyle": "Google", // yoksa Google stiline göre biçimlendirir
+  "[cpp]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+  "[c]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+  "files.associations": {
+    "random": "cpp"
+  }
+}

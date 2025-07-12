@@ -1,0 +1,44 @@
+openapi: 3.0.0
+info:
+  title: ROWS Game - OTA Service
+  description: Cihazların yazılım güncellemesi için kullanılan bir servis.
+  version: v1
+paths:
+  /update/getLatestVersion:
+    post:
+      summary: "yeni sürüm numarasını getir"
+      description: mevcut sürümden sonra çıkan ilk sürümün numarasını gönderir
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: mevcut sürüm numarası
+      responses:
+        '200':
+          description: "Başarılı"
+          content:
+            plain/text:
+              schema:
+                type: string
+                description: sürüm numarası
+  /update/download:
+    post:
+      summary: yeni firmware'i getir
+      description: mevcut sürümden sonra çıkan ilk sürümün firmware'ini dosya olarak gönderir
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: mevcut sürüm numarası
+      responses:
+        '200':
+          description: "Başarılı"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                description: firmware.bin

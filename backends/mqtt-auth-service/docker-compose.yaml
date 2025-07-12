@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  mqtt-auth-service:
+    build: .
+    container_name: mqtt-auth-service-container
+    restart: always
+    env_file:
+      - ../../config/env/.env
+    volumes:
+      - ./src/Public:/var/www/html
+      - ./src/Api:/var/www/Api
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true

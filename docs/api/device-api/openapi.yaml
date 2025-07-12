@@ -1,0 +1,35 @@
+openapi: 3.0.0
+info:
+  title: ROWS Game - Device API
+  description: Cihazın kullanacağı bir API.
+  version: v1
+paths:
+  /device/getActiveStudentCode:
+    get:
+      summary: cihazı kullanan aktif öğrencinin kodunu getir
+      description: 
+      responses:
+        '200':
+          description: "Başarılı"
+          content:
+            plain/text:
+              schema:
+                type: string
+                description: aktif öğrencinin kodu
+  /device/getMyClasses:
+    get:
+      summary: cihazı kullanan aktif öğrencinin kayıtlı olduğu sınıfları getir
+      responses:
+        '200':
+          description: "Başarılı"
+          content:
+            plain/text:
+              schema:
+                type: string
+                description: sınıf kodları virgüllerle ayrılmış
+  /device/finishTask:
+    post:
+      summary: görevi bitirdim
+      responses:
+        '200':
+          description: "Başarılı"

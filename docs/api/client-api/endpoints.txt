@@ -1,0 +1,57 @@
+// KAYDOLMA İŞLEMLERİ
+POST	/auth/register/parent			// Veli Oluştur
+POST	/auth/register/teacher			// Öğretmen Oluştur
+// GİRİŞ / ÇIKIŞ İŞLEMLERİ
+POST	/auth/login				// Giriş Yap
+POST	/auth/logout				// Çıkış Yap
+POST    /auth/token             // Token Kontrol
+// CİHAZ İŞLEMLERİ
+GET	/devices/{code}?/me			// Cihaz Bilgilerini Göster
+PUT	/devices/{code}?/me			// Cihaz Bilgilerini Güncelle
+POST	/devices/{code}?/change-password	// Cihaz Parolasını Değiştir
+POST	/devices/{code}?/active-student		// Cihaz Aktif Öğrencisini Değiştir
+// VELİ İŞLEMLERİ
+GET	/parents/{code}?/me			// Veli Bilgilerini Göster
+PUT	/parents/{code}?/me			// Veli Bilgilerini Güncelle
+DELETE	/parents/{code}?/me			// Veli Hesabını Sil
+POST	/parents/{code}?/change-password	// Veli Parolasını Değiştir
+GET	/parents/{code}?/students		// Velinin Öğrencilerini Listele
+POST	/parents/{code}?/students		// Yeni Öğrenci Oluştur
+// ÖĞRENCİ İŞLEMLERİ
+GET	/students/{code}?/me			// Öğrenci Bilgilerini Göster
+PUT	/students/{code}?/me			// Öğrenci Bilgilerini Güncelle
+DELETE	/students/{code}?/me			// Öğrenci Hesabını Sil
+POST	/students/{code}?/change-password	// Öğrenci Parolasını Değiştir
+GET	/students/{code}?/classes		// Öğrencinin Sınıflarını Listele
+// ÖĞRETMEN İŞLEMLERİ
+GET	/teachers/{code}?/me			// Öğretmen Bilgilerini Göster
+PUT	/teachers/{code}?/me			// Öğretmen Bilgilerini Güncelle
+DELETE	/teachers/{code}?/me			// Öğretmen Hesabını Sil
+POST	/teachers/{code}?/change-password	// Öğretmen Parolasını Değiştir
+GET	/teachers/{code}?/classes		// Öğretmenin Sınıflarını Listele
+POST	/teachers/{code}?/classes		// Yeni Sınıf Oluştur
+// SINIF İŞLEMLERİ
+GET	/classes/{code}				// Sınıf Detaylarını Göster
+PUT	/classes/{code}				// Sınıf Detaylarını Güncelle
+DELETE	/classes/{code}				// Sınıfı Sil
+POST	/classes/{code}/join			// Sınıfa Katıl
+POST	/classes/{code}/leave			// Sınıftan Ayrıl	
+GET	/classes/{code}/students		// Sınıfa Kayıtlı Öğrencileri Göster
+POST    /classes/{code}/students		// Sınıfa Öğrenci Ekle
+DELETE	/classes/{code}/students/{code}		// Sınıfa Kayıtlı Öğrenciyi Sınıftan At
+GET	/classes/{code}/leaderboard		// Sınıf Liderlik Tablosunu Göster
+GET	/classes/{code}/tasklists		// Sınıfa Verilen Görev Listelerini Göster
+POST	/classes/{code}/tasklists		// Sınıfa Görev Listesi Ver
+// GÖREV İŞLEMLERİ
+POST	/tasks					// Görev Oluştur
+GET	/tasks/{code}				// Görev Detaylarını Göster
+PUT	/tasks/{code}				// Görev Detaylarını Güncelle
+DELETE	/tasks/{code}				// Görevi Sil
+POST	/tasks/{code}/like			// Görevi Favorilere Ekle
+POST	/tasks/{code}/unlike			// Görevi Favorilerden Kaldır
+GET	/tasks/favorite				// Favori Görevlerimi Göster
+// GÖREV LİSTESİ İŞLEMLERİ
+GET	/tasklists/{code}			// Görev Listesinin Detaylarını Göster
+PUT	/tasklists/{code}			// Görev Listesinin Detaylarını Güncelle
+DELETE	/tasklists/{code}			// Görev Listesini Sil
+GET	/tasklists/{code}/tasks/{code}/stats	// Görev Listesindeki Bir Görev Hakkında Bilgiler
