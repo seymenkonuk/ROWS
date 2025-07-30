@@ -34,7 +34,10 @@ Sunduğu özellikler:
 - Mobil uygulama ile öğretmen ve velilere ilerleme takibi (geliştirme aşamasında)
 - MQTT protokolü kullanılarak mobil uygulama ile oyun konsolu arasında anlık iletişim (geliştirme aşamasında)
 
-![Oyun Konsolu](docs/images/device-1.jpg)
+<p align="center">
+  <img src="docs/images/device-case-1.jpg" style="width: 49%;" />
+  <img src="docs/images/device-1.jpg" style="width: 49%;" />
+</p>
 
 ---
 
