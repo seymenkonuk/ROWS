@@ -7,7 +7,6 @@ RUN docker-php-ext-install pdo pdo_mysql
 RUN a2enmod ssl && a2enmod rewrite
 
 COPY apache/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
-# COPY ../../config/certs /etc/apache2/ssl
 
 # SSL site'ını aktif et
 RUN a2ensite default-ssl.conf

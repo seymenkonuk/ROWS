@@ -12,7 +12,8 @@ services:
     volumes:
       - ../../config/certs:/etc/apache2/ssl
       - ./src/Public:/var/www/html
-      - ./src/Api:/var/www/Api
+      - ./src/App:/var/www/App
+      - ./src/Firmwares:/var/www/Firmwares
     environment:
       - APACHE_RUN_USER=www-data
       - APACHE_RUN_GROUP=www-data
