@@ -11,7 +11,7 @@ services:
       - "3000:80"
     volumes:
       - ./src/Public:/var/www/html
-      - ./src/Api:/var/www/Api
+      - ./src/App:/var/www/App
     networks:
       - app-network
 
