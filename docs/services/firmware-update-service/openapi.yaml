@@ -4,8 +4,8 @@ info:
   description: Cihazların yazılım güncellemesi için kullanılan bir servis.
   version: v1
 paths:
-  /update/getLatestVersion:
-    post:
+  /update/version:
+    get:
       summary: "yeni sürüm numarasını getir"
       description: mevcut sürümden sonra çıkan ilk sürümün numarasını gönderir
       requestBody:
@@ -24,7 +24,7 @@ paths:
                 type: string
                 description: sürüm numarası
   /update/download:
-    post:
+    get:
       summary: yeni firmware'i getir
       description: mevcut sürümden sonra çıkan ilk sürümün firmware'ini dosya olarak gönderir
       requestBody:
