@@ -1,0 +1,154 @@
+// ============================================================================
+// File:    APIClient.cpp
+// Author:  Recep Seymen Konuk <konukrecepseymen@gmail.com>
+//
+// Licensed under the terms of the LICENSE file in the project root directory.
+// ============================================================================
+
+#include "network/APIClient.h"
+
+#include "network/Certificate.h"
+
+uint32_t APIClient::_timeout;
+
+void APIClient::init(uint32_t timeoutMs) {
+  _timeout = timeoutMs;
+}
+
+APIResponse APIClient::get(const String &url) {
+  APIResponse response;
+  HTTPClient https;
+
+  // Timeout'u Ayarla
+  https.setTimeout(_timeout);
+
+  // HTTP Başlatılamadı
+  if (!https.begin(Certificate::wifiClient, url)) {
+    response.error = "HTTP begin failed";
+    return response;
+  }
+
+  // İsteği Gönder
+  int httpCode = https.GET();
+  response.statusCode = httpCode;
+
+  // Cevabı Al
+  if (httpCode > 0) {
+    response.contentLength = https.getSize();
+    response.contentType = https.header("Content-Type");
+    response.body = https.getString();
+  } else {
+    response.error = https.errorToString(httpCode);
+  }
+
+  // Bağlantıyı Sonlandır
+  https.end();
+  return response;
+}
+
+APIResponse APIClient::post(const String &url, const String &contentType, const String &body) {
+  APIResponse response;
+  HTTPClient https;
+
+  // Timeout'u Ayarla
+  https.setTimeout(_timeout);
+
+  // HTTP Başlatılamadı
+  if (!https.begin(Certificate::wifiClient, url)) {
+    response.error = "HTTP begin failed";
+    return response;
+  }
+
+  // Header Ekle
+  https.addHeader("Content-Type", contentType);
+
+  // İsteği Gönder
+  int httpCode = https.POST(body);
+  response.statusCode = httpCode;
+
+  // Cevabı Al
+  if (httpCode > 0) {
+    response.contentLength = https.getSize();
+    response.contentType = https.header("Content-Type");
+    response.body = https.getString();
+  } else {
+    response.error = https.errorToString(httpCode);
+  }
+
+  // Bağlantıyı Sonlandır
+  https.end();
+  return response;
+}
+
+bool APIClient::getStream(const String &url, StreamHandler handler) {
+  APIResponse response;
+  HTTPClient https;
+  bool result = false;
+
+  // Parametre Hatası
+  if (!handler) {
+    return false;
+  }
+
+  // Timeout'u Ayarla
+  https.setTimeout(_timeout);
+
+  // HTTP Başlatılamadı
+  if (!https.begin(Certificate::wifiClient, url)) {
+    return false;
+  }
+
+  // İsteği Gönder
+  int httpCode = https.GET();
+  response.statusCode = httpCode;
+
+  // İstek Başarılı, Handler'ı Çağır
+  if (httpCode > 0) {
+    response.contentLength = https.getSize();
+    response.contentType = https.header("Content-Type");
+    response.stream = &https.getStream();
+    result = handler(response);
+  }
+
+  // Bağlantıyı Sonlandır
+  https.end();
+  return result;
+}
+
+bool APIClient::postStream(const String &url, const String &contentType, const String &body, StreamHandler handler) {
+  APIResponse response;
+  HTTPClient https;
+  bool result = false;
+
+  // Parametre Hatası
+  if (!handler) {
+    return false;
+  }
+
+  // Timeout'u Ayarla
+  https.setTimeout(_timeout);
+
+  // HTTP Başlatılamadı
+  if (!https.begin(Certificate::wifiClient, url)) {
+    return false;
+  }
+
+  // Header Ekle
+  https.addHeader("Content-Type", contentType);
+
+  // İsteği Yap
+  int httpCode = https.POST(body);
+  response.statusCode = httpCode;
+
+  // İstek Başarılı, Handler'ı Çağır
+  if (httpCode > 0) {
+    response.contentLength = https.getSize();
+    response.contentType = https.header("Content-Type");
+    response.stream = &https.getStream();
+    result = handler(response);
+  }
+
+  // Bağlantıyı Sonlandır
+  https.end();
+  return result;
+}

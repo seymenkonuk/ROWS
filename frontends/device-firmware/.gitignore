@@ -4,5 +4,5 @@
 .vscode/launch.json
 .vscode/ipch
 
-data/certificates/**
-!data/certificates/.gitkeep
+data/certificates/**/*.crt
+data/certificates/**/*.key
