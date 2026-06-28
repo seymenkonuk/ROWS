@@ -25,8 +25,13 @@ template <uint8_t timerId> Timer<timerId> *Timer<timerId>::create() {
     instance = new Timer<timerId>();
     return instance;
   }
-  // Varsa null Döndür (Aynı Timer İki Kişi Kullanamaz)
-  LOG_ERROR("Timer creation failed: Timer<%u> is already in use.", timerId);
+  // Kilitli Değilse Instance'ı Döndür
+  if (!instance->isLocked) {
+    LOG_INFO("Timer<%u> already exists, returning existing instance.", timerId);
+    return instance;
+  }
+  // Kilitliyse null Döndür (Aynı Timer İki Kişi Kullanamaz)
+  LOG_ERROR("Cannot create Timer<%u>: an existing instance is locked.", timerId);
   return nullptr;
 }
 
@@ -49,4 +54,9 @@ template <uint8_t timerId> void Timer<timerId>::start(uint32_t period_us) {
 template <uint8_t timerId> void Timer<timerId>::stop() {
   LOG_INFO("Stopping Timer<%u>...", timerId);
   timerAlarmDisable(timer);
+}
+
+template <uint8_t timerId> void Timer<timerId>::lock() {
+  LOG_INFO("Locking Timer<%u>...", timerId);
+  isLocked = true;
 }

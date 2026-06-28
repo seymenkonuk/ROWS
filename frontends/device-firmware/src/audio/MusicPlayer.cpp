@@ -26,6 +26,9 @@ void MusicPlayer::init() {
   LOG_INFO("Initializing music player...");
   // Zamanlayıcı Oluştur
   timer = Timer<0>::create();
+  // Zamanlayıcıyı Kilitle (Başkası Kullanamaz)
+  timer->lock();
+  // Zamanlayıcıyı Yapılandır
   timer->init(80, onTimer);
   // Kuyruk Oluştur
   queue = xQueueCreate(1024, sizeof(uint8_t));

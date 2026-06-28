@@ -17,6 +17,8 @@ private:
   hw_timer_t *timer = nullptr;
   void (*callback)() = nullptr;
 
+  bool isLocked = false;
+
   static Timer<timerId> *instance;
   static void IRAM_ATTR onTimerStatic();
 
@@ -28,6 +30,7 @@ public:
   void init(uint16_t prescaler, void (*cb)());
   void start(uint32_t period_us);
   void stop();
+  void lock();
 };
 
 #include "Timer.tpp"
