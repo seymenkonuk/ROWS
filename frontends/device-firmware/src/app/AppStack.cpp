@@ -28,6 +28,7 @@ IApplication *AppStack::sysApps[] = {
 
 // Kullanıcı Uygulamaları Listesi
 IApplication *AppStack::usrApps[] = {
+    &launcher,
     &app1,
     &app2,
 };

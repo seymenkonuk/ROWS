@@ -12,7 +12,7 @@
 
 // DEFINES
 #define SYS_APP_COUNT 1
-#define USR_APP_COUNT 2
+#define USR_APP_COUNT 3
 
 // CLASSES
 class AppStack {

@@ -27,10 +27,10 @@ void Launcher::onEnter() {
   sysAppIndex = 0;
   usrAppIndex = 0;
   // Sistem Uygulamaları Menüsünde Başlat
-  currentAppType = 0;
-  currentAppIndex = &sysAppIndex;
-  maxCurrentAppCount = SYS_APP_COUNT;
-  getApp = AppStack::getSysApp;
+  currentAppType = 1;
+  currentAppIndex = &usrAppIndex;
+  maxCurrentAppCount = USR_APP_COUNT;
+  getApp = AppStack::getUsrApp;
 }
 
 void Launcher::onExit() {
