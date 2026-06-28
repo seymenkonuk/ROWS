@@ -7,21 +7,26 @@
 
 #include "core/system/AppManager.h"
 
+#include "core/Logger.h"
+
 IApplication *AppManager::currentApp = nullptr;
 
 void AppManager::setApp(IApplication *app) {
   // Parametre Hatası
   if (!app) {
+    LOG_ERROR("Parameter error: app cannot be null.");
     return;
   }
   // Acik Olan Uygulamayi Kapat
   if (currentApp) {
+    LOG_INFO("Shutting down application: %s", currentApp->getName());
     currentApp->onExit();
   }
   // Yeni Uygulamayi Degiskene Ata
   currentApp = app;
   // Yeni Uygulamayi Ac
   if (currentApp) {
+    LOG_INFO("Starting application: %s", currentApp->getName());
     currentApp->onEnter();
   }
 }

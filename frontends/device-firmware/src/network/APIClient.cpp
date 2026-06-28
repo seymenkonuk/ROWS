@@ -7,11 +7,14 @@
 
 #include "network/APIClient.h"
 
+#include "core/Logger.h"
+
 #include "network/Certificate.h"
 
 uint32_t APIClient::_timeout;
 
 void APIClient::init(uint32_t timeoutMs) {
+  LOG_INFO("Initializing API client...");
   _timeout = timeoutMs;
 }
 
@@ -24,6 +27,7 @@ APIResponse APIClient::get(const String &url) {
 
   // HTTP Başlatılamadı
   if (!https.begin(Certificate::wifiClient, url)) {
+    LOG_ERROR("HTTP begin failed: GET %s", url.c_str());
     response.error = "HTTP begin failed";
     return response;
   }
@@ -31,6 +35,7 @@ APIResponse APIClient::get(const String &url) {
   // İsteği Gönder
   int httpCode = https.GET();
   response.statusCode = httpCode;
+  LOG_INFO("HTTP request sent: GET %s", url.c_str());
 
   // Cevabı Al
   if (httpCode > 0) {
@@ -55,6 +60,7 @@ APIResponse APIClient::post(const String &url, const String &contentType, const 
 
   // HTTP Başlatılamadı
   if (!https.begin(Certificate::wifiClient, url)) {
+    LOG_ERROR("HTTP begin failed: POST %s", url.c_str());
     response.error = "HTTP begin failed";
     return response;
   }
@@ -65,6 +71,7 @@ APIResponse APIClient::post(const String &url, const String &contentType, const 
   // İsteği Gönder
   int httpCode = https.POST(body);
   response.statusCode = httpCode;
+  LOG_INFO("HTTP request sent: POST %s", url.c_str());
 
   // Cevabı Al
   if (httpCode > 0) {
@@ -87,6 +94,7 @@ bool APIClient::getStream(const String &url, StreamHandler handler) {
 
   // Parametre Hatası
   if (!handler) {
+    LOG_ERROR("Parameter error: handler cannot be null");
     return false;
   }
 
@@ -95,12 +103,14 @@ bool APIClient::getStream(const String &url, StreamHandler handler) {
 
   // HTTP Başlatılamadı
   if (!https.begin(Certificate::wifiClient, url)) {
+    LOG_ERROR("HTTP begin failed: GET %s", url.c_str());
     return false;
   }
 
   // İsteği Gönder
   int httpCode = https.GET();
   response.statusCode = httpCode;
+  LOG_INFO("HTTP request sent: GET %s", url.c_str());
 
   // İstek Başarılı, Handler'ı Çağır
   if (httpCode > 0) {
@@ -122,6 +132,7 @@ bool APIClient::postStream(const String &url, const String &contentType, const S
 
   // Parametre Hatası
   if (!handler) {
+    LOG_ERROR("Parameter error: Handler cannot be null");
     return false;
   }
 
@@ -130,6 +141,7 @@ bool APIClient::postStream(const String &url, const String &contentType, const S
 
   // HTTP Başlatılamadı
   if (!https.begin(Certificate::wifiClient, url)) {
+    LOG_ERROR("HTTP begin failed: POST %s", url.c_str());
     return false;
   }
 
@@ -139,6 +151,7 @@ bool APIClient::postStream(const String &url, const String &contentType, const S
   // İsteği Yap
   int httpCode = https.POST(body);
   response.statusCode = httpCode;
+  LOG_INFO("HTTP request sent: POST %s", url.c_str());
 
   // İstek Başarılı, Handler'ı Çağır
   if (httpCode > 0) {

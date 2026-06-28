@@ -7,6 +7,8 @@
 
 #include "device/Joystick.h"
 
+#include "core/Logger.h"
+
 #include <Arduino.h>
 
 template <uint8_t PinX, uint8_t PinY, uint8_t Deadzone> int Joystick<PinX, PinY, Deadzone>::_rawX = 0;
@@ -15,6 +17,7 @@ template <uint8_t PinX, uint8_t PinY, uint8_t Deadzone> int16_t Joystick<PinX, P
 template <uint8_t PinX, uint8_t PinY, uint8_t Deadzone> int16_t Joystick<PinX, PinY, Deadzone>::_normY = 0;
 
 template <uint8_t PinX, uint8_t PinY, uint8_t Deadzone> void Joystick<PinX, PinY, Deadzone>::init() {
+  LOG_INFO("Initializing Joystick<%u, %u>...", PinX, PinY);
   pinMode(PinX, INPUT);
   pinMode(PinY, INPUT);
 }

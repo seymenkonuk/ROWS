@@ -7,6 +7,7 @@
 
 #include "network/DeviceServer.h"
 
+#include "core/Logger.h"
 #include "core/system/Filesystem.h"
 
 #include "network/Network.h"
@@ -20,6 +21,7 @@ String DeviceServer::apSSID, DeviceServer::apPass;
 String DeviceServer::wifiSSID, DeviceServer::wifiPass;
 
 void DeviceServer::init() {
+  LOG_INFO("Initializing web server...");
   // Gerekli Değişkenleri Oku
   username = Filesystem::read("/certificates/CN");
   password = Filesystem::read("/certificates/PASS");
@@ -34,11 +36,13 @@ void DeviceServer::init() {
 }
 
 void DeviceServer::start() {
+  LOG_INFO("Starting web server...");
   server.begin();
   serverRunning = true;
 }
 
 void DeviceServer::stop() {
+  LOG_INFO("Web server stopped.");
   server.stop();
   serverRunning = false;
 }
@@ -50,6 +54,7 @@ void DeviceServer::loop() {
 }
 
 void DeviceServer::handleHomeGet() {
+  LOG_INFO("Request received: GET /");
   // Kimlik Doğrulama İste
   if (!authenticate()) {
     return;
@@ -65,6 +70,7 @@ void DeviceServer::handleHomeGet() {
 }
 
 void DeviceServer::handleHomePost() {
+  LOG_INFO("Request received: POST /");
   // Kimlik Doğrulama İste
   if (!authenticate()) {
     return;
@@ -96,6 +102,7 @@ void DeviceServer::handleHomePost() {
 }
 
 void DeviceServer::handleStyleGet() {
+  LOG_INFO("Request received: GET /style.css");
   // Kimlik Doğrulama İste
   if (!authenticate()) {
     return;
@@ -108,8 +115,10 @@ void DeviceServer::handleStyleGet() {
 bool DeviceServer::authenticate() {
   // Kimlik Doğrulama İste
   if (!server.authenticate(username.c_str(), password.c_str())) {
+    LOG_WARN("Authentication failed.");
     server.requestAuthentication();
     return false;
   }
+  LOG_INFO("Authentication successful.");
   return true;
 }

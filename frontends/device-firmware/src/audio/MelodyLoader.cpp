@@ -7,16 +7,26 @@
 
 #include "audio/MelodyLoader.h"
 
+#include "core/Logger.h"
+
 Melody *MelodyLoader::currentMelody = nullptr;
 
 bool MelodyLoader::loadFromFile(const char *path, Melody *melody) {
+  LOG_INFO("Loading melody file...");
   // Parametre Hatası
   if (!melody) {
+    LOG_ERROR("Parameter error: melody cannot be null.");
     return false;
   }
-  // Stream Olarak Oku
+  // Melodi İşaretçisini Değişkene Ata
   currentMelody = melody;
-  return Filesystem::readStream(path, melodyCallback);
+  // Stream Olarak Oku
+  if (!Filesystem::readStream(path, melodyCallback)) {
+    LOG_ERROR("Failed to load melody file.");
+    return false;
+  }
+  LOG_INFO("Melody file loaded successfully.");
+  return true;
 }
 
 bool MelodyLoader::loadFromFile(const String &path, Melody *melody) {
@@ -26,6 +36,7 @@ bool MelodyLoader::loadFromFile(const String &path, Melody *melody) {
 bool MelodyLoader::melodyCallback(Stream &s) {
   // Tempo Bilgisini Oku
   if (!s.available()) {
+    LOG_ERROR("Invalid melody file: failed to read tempo.");
     return false;
   }
   currentMelody->setTempo(s.read());
@@ -35,6 +46,7 @@ bool MelodyLoader::melodyCallback(Stream &s) {
     uint8_t frequencyId = s.read();
     // Süreyi Oku
     if (!s.available()) {
+      LOG_ERROR("Invalid melody file: failed to read duration.");
       return false;
     }
     uint8_t durationId = s.read();
@@ -45,6 +57,7 @@ bool MelodyLoader::melodyCallback(Stream &s) {
   }
   // Hiç Notası Olmayan Melodi Dosyası Olmaz
   if (currentMelody->getLength() <= 0) {
+    LOG_ERROR("Invalid melody file: no note data found.");
     return false;
   }
   return true;

@@ -7,6 +7,8 @@
 
 #include "device/Screen.h"
 
+#include "core/Logger.h"
+
 #if defined(PARALLEL_CONNECTION)
 LGFX::LGFX() {
   // Bus Ayarları
@@ -123,11 +125,18 @@ LGFX Screen::tft;
 
 bool Screen::init() {
   bool result;
+  LOG_INFO("Initializing screen...");
   result = tft.begin();
   tft.setRotation(SCREEN_ORIENTATION);
   tft.setBrightness(255);
   tft.setColorDepth(COLOR_DEPTH);
   tft.setTextDatum(MC_DATUM);
+  // Ekran Başlatılamadı
+  if (!result) {
+    LOG_ERROR("Screen initialization failed.");
+    return false;
+  }
+  LOG_INFO("Screen initialization successful.");
   return result;
 }
 

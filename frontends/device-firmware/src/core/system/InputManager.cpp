@@ -7,6 +7,8 @@
 
 #include "core/system/InputManager.h"
 
+#include "core/Logger.h"
+
 Button<LEFT_BUTTON_PIN> InputManager::buttonLeft;
 Button<RIGHT_BUTTON_PIN> InputManager::buttonRight;
 Button<UP_BUTTON_PIN> InputManager::buttonUp;
@@ -24,6 +26,7 @@ Joystick<JOYSTICK_1_X_PIN, JOYSTICK_1_Y_PIN> InputManager::joystick1;
 Joystick<JOYSTICK_2_X_PIN, JOYSTICK_2_Y_PIN> InputManager::joystick2;
 
 void InputManager::init() {
+  LOG_INFO("Initializing inputs...");
   buttonLeft.init();
   buttonRight.init();
   buttonUp.init();

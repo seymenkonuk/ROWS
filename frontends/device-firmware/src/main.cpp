@@ -10,6 +10,8 @@
 #include "audio/MelodyPlayer.h"
 #include "audio/MusicPlayer.h"
 
+#include "core/Logger.h"
+
 #include "core/system/AppManager.h"
 #include "core/system/Filesystem.h"
 #include "core/system/InputManager.h"
@@ -25,6 +27,7 @@
 #include "network/OTAService.h"
 
 void setup() {
+  LOG_INIT(115200);
   // Donanımı Başlat
   Screen::init();
   InputManager::init();
@@ -48,6 +51,12 @@ void setup() {
   Time::init();
   // Uygulamayı Başlat
   AppManager::setApp(AppStack::getSysApp(0));
+  // Memory Log
+  LOG_INFO("Memory Status:");
+  LOG_INFO("Total Heap : %u bytes", ESP.getHeapSize());
+  LOG_INFO("Free Heap  : %u bytes", ESP.getFreeHeap());
+  LOG_INFO("Min Free   : %u bytes", ESP.getMinFreeHeap());
+  LOG_INFO("Max Alloc  : %u bytes", ESP.getMaxAllocHeap());
 }
 
 void loop() {

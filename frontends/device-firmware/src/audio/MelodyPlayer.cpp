@@ -9,6 +9,7 @@
 
 #include "audio/MelodyLoader.h"
 
+#include "core/Logger.h"
 #include "core/system/Time.h"
 
 #include "device/Speaker.h"
@@ -22,12 +23,15 @@ bool MelodyPlayer::isNotePlaying = false;
 uint32_t MelodyPlayer::noteStartTime;
 
 void MelodyPlayer::init() {
+  LOG_INFO("Initializing melody player...");
 }
 
 bool MelodyPlayer::play(const char *path, bool loopState) {
   isLooping = loopState;
+  LOG_INFO("Playing melody: %s", path);
   // Melodiyi Dosyadan Oku
   if (!MelodyLoader::loadFromFile(path, &melody)) {
+    LOG_ERROR("Audio play failed: Could not load file %s", path);
     return false;
   }
   // Başa Sar
@@ -82,6 +86,7 @@ void MelodyPlayer::loop() {
     }
     // Müzik Bittiyse Durdur
     if (melody.isFinished() && !isLooping) {
+      LOG_INFO("Melody finished.");
       stop();
       return;
     }

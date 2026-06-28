@@ -7,6 +7,8 @@
 
 #include "device/Button.h"
 
+#include "core/Logger.h"
+
 #include <Arduino.h>
 
 template <uint8_t Pin, bool Pullup, uint16_t DebounceMs> bool Button<Pin, Pullup, DebounceMs>::_state = false;
@@ -15,6 +17,7 @@ template <uint8_t Pin, bool Pullup, uint16_t DebounceMs> bool Button<Pin, Pullup
 template <uint8_t Pin, bool Pullup, uint16_t DebounceMs> uint32_t Button<Pin, Pullup, DebounceMs>::_lastChangeTime = 0;
 
 template <uint8_t Pin, bool Pullup, uint16_t DebounceMs> void Button<Pin, Pullup, DebounceMs>::init() {
+  LOG_INFO("Initializing Button<%u>...", Pin);
   if (Pullup)
     pinMode(Pin, INPUT_PULLUP);
   else
@@ -34,6 +37,7 @@ template <uint8_t Pin, bool Pullup, uint16_t DebounceMs> void Button<Pin, Pullup
     if (_state != raw) {
       _state = raw;
       _changed = true;
+      LOG_INFO("Button<%d> %s.", Pin, _state ? "pressed" : "released");
     } else {
       _changed = false;
     }

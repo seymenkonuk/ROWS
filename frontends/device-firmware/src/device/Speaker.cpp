@@ -5,11 +5,14 @@
 // Licensed under the terms of the LICENSE file in the project root directory.
 // ============================================================================
 
-#include <Arduino.h>
-
 #include "device/Speaker.h"
 
+#include "core/Logger.h"
+
+#include <Arduino.h>
+
 void Speaker::init() {
+  LOG_INFO("Initializing speaker...");
   pinMode(SPEAKER_PIN, OUTPUT);
 }
 

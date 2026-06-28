@@ -5,15 +5,18 @@
 // Licensed under the terms of the LICENSE file in the project root directory.
 // ============================================================================
 
-#include <Arduino.h>
-
 #include "core/system/Time.h"
+
+#include "core/Logger.h"
+
+#include <Arduino.h>
 
 uint32_t Time::_lastTime = 0;
 uint32_t Time::_deltaTime = 0;
 uint32_t Time::_totalTime = 0;
 
 void Time::init() {
+  LOG_INFO("Initializing time...");
   _lastTime = now();
 }
 

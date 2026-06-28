@@ -7,11 +7,14 @@
 
 #include "network/MQTTClient.h"
 
+#include "core/Logger.h"
+
 #include "network/Certificate.h"
 
 PubSubClient MQTTClient::client(Certificate::wifiClient);
 
 void MQTTClient::setServer(const char *domain, uint16_t port) {
+  LOG_INFO("MQTT configured: %s:%u", domain, port);
   client.setServer(domain, port);
 }
 
@@ -24,7 +27,13 @@ void MQTTClient::setCallback(MQTTHandler handler) {
 }
 
 bool MQTTClient::connect(const char *id) {
-  return client.connect(id);
+  LOG_INFO("Connecting to MQTT with ID: %s", id);
+  if (!client.connect(id)) {
+    LOG_ERROR("Connection failed.");
+    return false;
+  }
+  LOG_INFO("Connected.");
+  return true;
 }
 
 bool MQTTClient::connect(const String &id) {
@@ -32,15 +41,28 @@ bool MQTTClient::connect(const String &id) {
 }
 
 void MQTTClient::disconnect() {
+  LOG_INFO("MQTT disconnected.");
   client.disconnect();
 }
 
 bool MQTTClient::subscribe(const char *topic) {
-  return client.subscribe(topic);
+  LOG_INFO("Subscribing to topic: %s", topic);
+  if (!client.subscribe(topic)) {
+    LOG_ERROR("Subscription failed.");
+    return false;
+  }
+  LOG_INFO("Subscribed.");
+  return true;
 }
 
 bool MQTTClient::subscribe(const char *topic, uint8_t qos) {
-  return client.subscribe(topic, qos);
+  LOG_INFO("Subscribing to topic: %s", topic);
+  if (!client.subscribe(topic, qos)) {
+    LOG_ERROR("Subscription failed.");
+    return false;
+  }
+  LOG_INFO("Subscribed.");
+  return true;
 }
 
 bool MQTTClient::subscribe(const String &topic) {
@@ -52,7 +74,13 @@ bool MQTTClient::subscribe(const String &topic, uint8_t qos) {
 }
 
 bool MQTTClient::publish(const char *topic, const char *message) {
-  return client.publish(topic, message);
+  LOG_INFO("Publishing to topic: %s", topic);
+  if (!client.publish(topic, message)) {
+    LOG_ERROR("Publish failed.");
+    return false;
+  }
+  LOG_INFO("Published.");
+  return true;
 }
 
 bool MQTTClient::publish(const char *topic, const String &message) {

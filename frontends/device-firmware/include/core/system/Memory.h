@@ -8,6 +8,7 @@
 #pragma once
 
 // INCLUDES
+#include "core/Logger.h"
 #include "core/system/MemoryPool.h"
 
 // CLASSES
@@ -17,8 +18,10 @@ public:
     // Alanı Tahsis Et
     void *mem = pool.allocate(sizeof(T), alignof(T));
     // Başarısız oldu
-    if (!mem)
+    if (!mem) {
+      LOG_ERROR("Allocation failed.");
       return nullptr;
+    }
     // O Alana Objeyi Oluştur
     return new (mem) T(args...);
   }

@@ -12,6 +12,8 @@
 #include "app/user/app1/App1.h"
 #include "app/user/app2/App2.h"
 
+#include "core/Logger.h"
+
 // Sistem Uygulamaları
 static Launcher launcher;
 
@@ -32,6 +34,7 @@ IApplication *AppStack::usrApps[] = {
 
 IApplication *AppStack::getSysApp(uint32_t index) {
   if (index >= SYS_APP_COUNT) {
+    LOG_ERROR("Parameter error: index out of bounds (index: %u, max: %u)", index, SYS_APP_COUNT);
     return nullptr;
   }
   return sysApps[index];
@@ -39,6 +42,7 @@ IApplication *AppStack::getSysApp(uint32_t index) {
 
 IApplication *AppStack::getUsrApp(uint32_t index) {
   if (index >= USR_APP_COUNT) {
+    LOG_ERROR("Parameter error: index out of bounds (index: %u, max: %u)", index, USR_APP_COUNT);
     return nullptr;
   }
   return usrApps[index];

@@ -7,8 +7,16 @@
 
 #include "core/system/Filesystem.h"
 
+#include "core/Logger.h"
+
 bool Filesystem::init() {
-  return LittleFS.begin(false);
+  LOG_INFO("Initializing filesystem...");
+  if (!LittleFS.begin(false)) {
+    LOG_ERROR("Failed to initialize filesystem.");
+    return false;
+  }
+  LOG_INFO("Filesystem initialized.");
+  return true;
 }
 
 File Filesystem::open(const char *path, const char *mode) {
@@ -101,6 +109,7 @@ String Filesystem::read(const String &path) {
 bool Filesystem::readStream(const char *path, StreamHandler handler) {
   // Parametre Hatası
   if (!handler) {
+    LOG_ERROR("Parameter error: handler cannot be null.");
     return false;
   }
 

@@ -9,6 +9,8 @@
 
 #include "audio/MelodyPlayer.h"
 
+#include "core/Logger.h"
+
 #include "device/Speaker.h"
 
 QueueHandle_t MusicPlayer::queue;
@@ -21,6 +23,7 @@ bool MusicPlayer::isPlaying = false;
 bool MusicPlayer::isLooping = false;
 
 void MusicPlayer::init() {
+  LOG_INFO("Initializing music player...");
   // Zamanlayıcı Oluştur
   timer = Timer<0>::create();
   timer->init(80, onTimer);
@@ -31,6 +34,7 @@ void MusicPlayer::init() {
 }
 
 bool MusicPlayer::play(const char *path, bool loopState) {
+  LOG_INFO("Playing music: %s", path);
   // Değişkenleri Ayarla
   isPlaying = true;
   isLooping = loopState;
@@ -53,31 +57,29 @@ bool MusicPlayer::play(const String &path, bool loopState) {
 }
 
 void MusicPlayer::rewind() {
-  isPlaying = true;
   resetFilePosition();
+  resume();
 }
 
 void MusicPlayer::stop() {
   pause();
-  timer->stop();
   closeFile();
 }
 
 void MusicPlayer::pause() {
   isPlaying = false;
   Speaker::stop();
+  timer->stop();
+  xQueueReset(queue);
 }
 
 void MusicPlayer::resume() {
   isPlaying = true;
+  timer->start(1000000 / wavHeader.sampleRate);
 }
 
 // Yeni Sample Çalınması Gerektiğinde Tetiklenir
 void MusicPlayer::onTimer() {
-  // Müzik Çalmıyorsa Hiçbir Şey Yapma
-  if (!isPlaying) {
-    return;
-  }
   // Yeni Sample Çalınması için Kuyruğa Herhangi Bir Değer Gönder
   uint8_t data = 1;
   BaseType_t xHigherPriorityTaskWoken = pdFALSE;
@@ -100,6 +102,7 @@ void MusicPlayer::playSample() {
   }
   // Loopta Değilse Durdur
   else {
+    LOG_INFO("Music finished.");
     stop();
   }
 }
@@ -129,7 +132,11 @@ void MusicPlayer::closeFile() {
 
 bool MusicPlayer::parseWavHeader() {
   size_t size = wavFile.read((uint8_t *)&wavHeader, sizeof(WavHeader));
-  return size == sizeof(WavHeader);
+  if (size != sizeof(WavHeader)) {
+    LOG_ERROR("Failed to parse WAV header.");
+    return false;
+  }
+  return true;
 }
 
 void MusicPlayer::resetFilePosition() {

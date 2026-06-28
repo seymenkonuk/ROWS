@@ -7,6 +7,8 @@
 
 #include "audio/Melody.h"
 
+#include "core/Logger.h"
+
 #define X(name, value) value,
 uint32_t Melody::notesFrequency[] = {NOTE_FREQUENCY_LIST};
 #undef X
@@ -36,10 +38,12 @@ bool Melody::setNote(uint8_t frequencyId, uint8_t durationId) {
 bool Melody::setFrequency(uint8_t frequencyId, uint32_t index) {
   // Dizi Limitlerini Aştı
   if (index >= MAX_MELODY_SIZE) {
+    LOG_ERROR("Target index %d exceeds MAX_MELODY_SIZE", index);
     return false;
   }
   // Böyle Bir Frekans Yok
   if (frequencyId >= NOTE_FREQUENCY_COUNT) {
+    LOG_ERROR("Invalid frequency index %d", frequencyId);
     return false;
   }
   // Frekansı Ayarla
@@ -50,10 +54,12 @@ bool Melody::setFrequency(uint8_t frequencyId, uint32_t index) {
 bool Melody::setDuration(uint8_t durationId, uint32_t index) {
   // Dizi Limitlerini Aştı
   if (index >= MAX_MELODY_SIZE) {
+    LOG_ERROR("Target index %d exceeds MAX_MELODY_SIZE", index);
     return false;
   }
   // Böyle Bir Nota Süresi Yok
   if (durationId >= NOTE_DURATION_COUNT) {
+    LOG_ERROR("Invalid duration index %d", durationId);
     return false;
   }
   // Süreyi Ayarla
@@ -80,6 +86,7 @@ bool Melody::isFinished() {
 bool Melody::increaseIndex() {
   // Melodi Bitti (Başka Notası Kalmadı)
   if (isFinished()) {
+    LOG_WARN("Failed to increase melody index. End of melody reached at index %d", currentIndex);
     return false;
   }
   // Indexi Arttır

@@ -8,6 +8,8 @@
 #pragma once
 
 // INCLUDES
+#include "core/Logger.h"
+
 #include <stddef.h>
 #include <stdint.h>
 
@@ -22,21 +24,27 @@ public:
   }
 
   void *allocate(size_t size, size_t alignment = alignof(max_align_t)) {
+    LOG_INFO("Allocating memory (%u bytes)...", size);
     // Geçersiz Hizalama Değeri (Hizalama 2'nin Kuvveti Olmalı)
-    if ((alignment == 0) || (alignment & (alignment - 1)))
+    if ((alignment == 0) || (alignment & (alignment - 1))) {
+      LOG_ERROR("Parameter error: alignment must be a power of 2 (provided: %u)", alignment);
       return nullptr;
+    }
 
     // Verinin Hangi Offsetten İtibaren Başlayabileceğini Bul
     size_t alignedOffset = (offset + alignment - 1) & ~(alignment - 1);
 
     // Hafıza Kalmadı
-    if (alignedOffset + size > PoolSize)
+    if (alignedOffset + size > PoolSize) {
+      LOG_ERROR("Allocation failed: Not enough memory.");
       return nullptr;
+    }
 
     // Offset'i Güncelle
     offset = alignedOffset + size;
 
     // Adresi Dön
+    LOG_INFO("Memory allocation successful.");
     return buffer + alignedOffset;
   }
 

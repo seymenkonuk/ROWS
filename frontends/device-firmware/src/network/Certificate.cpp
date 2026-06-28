@@ -7,6 +7,7 @@
 
 #include "network/Certificate.h"
 
+#include "core/Logger.h"
 #include "core/system/Filesystem.h"
 
 WiFiClientSecure Certificate::wifiClient;
@@ -16,6 +17,7 @@ String Certificate::clientCert;
 String Certificate::clientKey;
 
 void Certificate::init() {
+  LOG_INFO("Initializing certificates...");
   // Sertifikaları Oku
   caCert = Filesystem::read("/certificates/ca.crt");
   clientCert = Filesystem::read("/certificates/client.crt");
