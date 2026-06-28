@@ -11,6 +11,14 @@ bool Filesystem::init() {
   return LittleFS.begin(false);
 }
 
+File Filesystem::open(const char *path, const char *mode) {
+  return LittleFS.open(path, mode);
+}
+
+File Filesystem::open(const String &path, const char *mode) {
+  return LittleFS.open(path, mode);
+}
+
 bool Filesystem::change(const char *path, const char *text, const char *mode) {
   File file = open(path, mode);
   // Dosya Açılamadı
@@ -112,12 +120,4 @@ bool Filesystem::readStream(const char *path, StreamHandler handler) {
 
 bool Filesystem::readStream(const String &path, StreamHandler handler) {
   return readStream(path.c_str(), handler);
-}
-
-File Filesystem::open(const char *path, const char *mode) {
-  return LittleFS.open(path, mode);
-}
-
-File Filesystem::open(const String &path, const char *mode) {
-  return LittleFS.open(path, mode);
 }

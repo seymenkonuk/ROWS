@@ -5,9 +5,9 @@
 // Licensed under the terms of the LICENSE file in the project root directory.
 // ============================================================================
 
-#include "app/AppStack.h"
-
 #include "app/user/app2/App2.h"
+
+#include "app/AppStack.h"
 
 #include "core/system/AppManager.h"
 #include "core/system/InputManager.h"

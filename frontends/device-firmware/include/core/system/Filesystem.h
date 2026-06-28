@@ -17,6 +17,9 @@ class Filesystem {
 public:
   static bool init();
 
+  static File open(const char *path, const char *mode);
+  static File open(const String &path, const char *mode);
+
   static bool write(const char *path, const char *text);
   static bool write(const char *path, const String &text);
   static bool write(const String &path, const char *text);
@@ -32,9 +35,6 @@ public:
 
   static bool readStream(const char *path, StreamHandler handler);
   static bool readStream(const String &path, StreamHandler handler);
-
-  static File open(const char *path, const char *mode);
-  static File open(const String &path, const char *mode);
 
 private:
   static bool change(const char *path, const char *text, const char *mode);
