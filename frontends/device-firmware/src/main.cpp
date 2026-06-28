@@ -8,6 +8,7 @@
 #include "app/AppStack.h"
 
 #include "audio/MelodyPlayer.h"
+#include "audio/MusicPlayer.h"
 
 #include "core/system/AppManager.h"
 #include "core/system/Filesystem.h"
@@ -32,6 +33,7 @@ void setup() {
   Filesystem::init();
   // Audio'yu Başlat
   MelodyPlayer::init();
+  MusicPlayer::init();
   // Network'u Yapılandır
   Network::init();
   Certificate::init();
