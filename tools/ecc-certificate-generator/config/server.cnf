@@ -5,7 +5,7 @@ x509_extensions     = v3_req
 prompt              = no
 
 [ dn ]
-CN = <your-domain>
+CN = ota.rows.local
 
 [ v3_req ]
 subjectAltName = @alt_names
@@ -13,4 +13,5 @@ keyUsage = digitalSignature, keyEncipherment
 extendedKeyUsage = serverAuth
 
 [ alt_names ]
-DNS.1 = <your-domain>
+DNS.1 = ota.rows.local
+IP.1 = 192.168.1.10

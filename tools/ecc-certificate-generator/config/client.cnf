@@ -5,7 +5,7 @@ x509_extensions     = v3_client
 prompt              = no
 
 [ dn ]
-CN = 7L66FY0H8TDQMAF0KU
+CN = <DO_NOT_MODIFY>
 
 [ v3_client ]
 subjectKeyIdentifier = hash

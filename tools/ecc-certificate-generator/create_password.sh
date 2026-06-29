@@ -18,4 +18,4 @@ shuffle() {
 
 password=$(shuffle "$password")
 
-echo "$password"
+echo -n "$password"
