@@ -1,0 +1,46 @@
+# Object files
+*.o
+
+# Dependency files
+*.d
+
+# Executables
+*.out
+*.exe
+*.elf
+
+# Static/Shared libraries
+*.a
+*.so
+
+# Debug symbols
+*.dSYM/
+*.gdb_history
+
+# Coverage files
+*.gcda
+*.gcno
+*.gcov
+
+# Profiling
+gmon.out
+
+# Build directories
+build/
+bin/
+out/
+
+# Editor files
+.vscode/
+.idea/
+
+# Vim
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
