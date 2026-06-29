@@ -19,7 +19,7 @@ all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	@mkdir -p out
-	$(CC) $(OBJ) $(DEFINES) -o $@
+	$(CC) $(OBJ) -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDE) $(DEFINES) -c $< -o $@
