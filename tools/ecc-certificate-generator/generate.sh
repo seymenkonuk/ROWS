@@ -9,6 +9,8 @@ CLIENT_PASS=$(./create_password.sh)
 
 # CA.CRT Dosyasının Kopyalanacağı Dizinler
 CA_CRT_TARGETS=(
+  "../../../backends/docker/mosquitto/certs/ca.crt"
+  "../../../backends/docker/nginx/certs/ca.crt"
 )
 
 # CA.KEY Dosyasının Kopyalanacağı Dizinler
@@ -17,34 +19,49 @@ CA_KEY_TARGETS=(
 
 # SERVER.CRT Dosyasının Kopyalanacağı Dizinler
 SERVER_CRT_TARGETS=(
+  "../../../backends/docker/mosquitto/certs/server.crt"
+  "../../../backends/docker/nginx/certs/server.crt"
 )
 
 # SERVER.KEY Dosyasının Kopyalanacağı Dizinler
 SERVER_KEY_TARGETS=(
+  "../../../backends/docker/mosquitto/certs/server.key"
+  "../../../backends/docker/nginx/certs/server.key"
 )
 
 # CLIENT.CRT Dosyasının Kopyalanacağı Dizinler
 CLIENT_CRT_TARGETS=(
+  "../../../firmware/data/certificates/client.crt"
 )
 
 # CLIENT.KEY Dosyasının Kopyalanacağı Dizinler
 CLIENT_KEY_TARGETS=(
+  "../../../firmware/data/certificates/client.key"
 )
 
 # CLIENT_NAME Değerinin Yazılacağı Dosyalar
 CLIENT_NAME_TARGETS=(
+  "../../../firmware/data/certificates/CN"
 )
 
 # CLIENT_PASS Değerinin Yazılacağı Dosyalar
 CLIENT_PASS_TARGETS=(
+  "../../../firmware/data/certificates/PASS"
+  "../../../firmware/data/network/ap/PASS"
 )
 
 # ROWS-$CLIENT_NAME Değerinin Yazılacağı Dosyalar
 ROWS_CLIENT_NAME_TARGETS=(
+  "../../../firmware/data/network/ap/SSID"
+)
+
+# Sertifika Zincirinin Yazılacağı Dosyalar
+CERTIFICATE_CHAIN_TARGETS=(
+  "../../../firmware/data/certificates/ca.crt"
 )
 
 # Sertifikalar Dizinine Git
-cd certificates
+cd certs
 
 # İlk Kez Sertifika Üretilecekse veya Resetlenecekse
 # Root ve Server Sertifikalarını Üret
@@ -83,41 +100,41 @@ mv "../config/client.bak" "../config/client.cnf"
 # CA.CRT Sertifikasını Gerekli Yerlere Kopyala
 for target in "${CA_CRT_TARGETS[@]}"; do
   echo "Copying: ca.crt -> $target"
-  cp -f "ca.crt" "$target/"
+  cp -f "ca.crt" "$target"
 done
 
 # CA.KEY Sertifikasını Gerekli Yerlere Kopyala
 for target in "${CA_KEY_TARGETS[@]}"; do
   echo "Copying: ca.key -> $target"
-  cp -f "ca.key" "$target/"
+  cp -f "ca.key" "$target"
 done
 
 # SERVER.CRT Sertifikasını Gerekli Yerlere Kopyala
 for target in "${SERVER_CRT_TARGETS[@]}"; do
   echo "Copying: server.crt -> $target"
-  cp -f "server.crt" "$target/"
+  cp -f "server.crt" "$target"
 done
 
 # SERVER.KEY Sertifikasını Gerekli Yerlere Kopyala
 for target in "${SERVER_KEY_TARGETS[@]}"; do
   echo "Copying: server.key -> $target"
-  cp -f "server.key" "$target/"
+  cp -f "server.key" "$target"
 done
 
 # CLIENT.CRT Sertifikasını Gerekli Yerlere Kopyala
 for target in "${CLIENT_CRT_TARGETS[@]}"; do
   echo "Copying: $CLIENT_NAME.crt -> $target"
-  cp -f "$CLIENT_NAME.crt" "$target/"
+  cp -f "$CLIENT_NAME.crt" "$target"
 done
 
 # CLIENT.KEY Sertifikasını Gerekli Yerlere Kopyala
 for target in "${CLIENT_KEY_TARGETS[@]}"; do
   echo "Copying: $CLIENT_NAME.key -> $target"
-  cp -f "$CLIENT_NAME.key" "$target/"
+  cp -f "$CLIENT_NAME.key" "$target"
 done
 
 # ROWS-CLIENT_NAME Değerini Gerekli Dosyalara Yaz
-for target in "${CLIENT_NAME_TARGETS[@]}"; do
+for target in "${ROWS_CLIENT_NAME_TARGETS[@]}"; do
   echo "Yazılıyor: ROWS-$CLIENT_NAME -> $target"
   echo -n "ROWS-$CLIENT_NAME" > "$target"
 done
@@ -132,6 +149,13 @@ done
 for target in "${CLIENT_PASS_TARGETS[@]}"; do
   echo "Yazılıyor: $CLIENT_PASS -> $target"
   echo -n "$CLIENT_PASS" > "$target"
+done
+
+# Sertifika Zincirini Gerekli Dosyalara Yaz
+for target in "${CERTIFICATE_CHAIN_TARGETS[@]}"; do
+  echo "Sertifika Zinciri Yazılıyor -> $target"
+  cat server.crt > "$target"
+  cat ca.crt >> "$target"
 done
 
 # 7. Bitti

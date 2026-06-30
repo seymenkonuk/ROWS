@@ -19,9 +19,9 @@ all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	@mkdir -p out
-	$(CC) $(OBJ) -o $@
+	$(CC) $^ -o $@
 
-%.o: %.c
+%.o: %.c force
 	$(CC) $(CFLAGS) $(INCLUDE) $(DEFINES) -c $< -o $@
 
 run: all
@@ -33,4 +33,4 @@ clean:
 
 force:
 
-.PHONY: all run clean
+.PHONY: all run clean force
