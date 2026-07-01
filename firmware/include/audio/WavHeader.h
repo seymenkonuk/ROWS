@@ -12,17 +12,23 @@
 
 // STRUCTURES
 typedef struct __attribute__((packed)) {
-  char riff[4];
-  uint32_t chunkSize;
-  char wave[4];
-  char fmt[4];
-  uint32_t subchunk1Size;
-  uint16_t audioFormat;
-  uint16_t numChannels;
-  uint32_t sampleRate;
-  uint32_t byteRate;
-  uint16_t blockAlign;
-  uint16_t bitsPerSample;
-  char data[4];
-  uint32_t dataSize;
+  // RIFF Chunk Descriptor
+  char chunkID[4];    // "RIFF"
+  uint32_t chunkSize; // 36 + SubChunk2Size
+  char format[4];     // "WAVE"
+
+  // fmt Subchunk
+  char subchunk1ID[4];    // "fmt "
+  uint32_t subchunk1Size; // 16 for PCM
+  uint16_t audioFormat;   // PCM = 1
+  uint16_t numChannels;   // 1 = mono, 2 = stereo
+  uint32_t sampleRate;    // 44100, 48000 etc.
+  uint32_t byteRate;      // sampleRate * numChannels * bitsPerSample/8
+  uint16_t blockAlign;    // numChannels * bitsPerSample/8
+  uint16_t bitsPerSample; // 8, 16, 24, 32
+
+  // data Subchunk
+  char subchunk2ID[4];    // "data"
+  uint32_t subchunk2Size; // data size in bytes
+
 } WavHeader;

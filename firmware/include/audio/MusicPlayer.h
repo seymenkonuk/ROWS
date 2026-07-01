@@ -8,9 +8,8 @@
 #pragma once
 
 // INCLUDES
-#include "audio/WavHeader.h"
+#include "audio/WavFile.h"
 
-#include "core/system/Filesystem.h"
 #include "core/system/Timer.h"
 
 // CLASSES
@@ -28,8 +27,7 @@ private:
   static QueueHandle_t queue;
   static Timer<0> *timer;
 
-  static File wavFile;
-  static WavHeader wavHeader;
+  static WavFile wavFile;
 
   static bool isPlaying;
   static bool isLooping;
@@ -37,11 +35,4 @@ private:
   static void onTimer();
   static void playSample();
   static void loopTask(void *p);
-
-  static bool openFile(const char *path);
-  static void closeFile();
-  static bool parseWavHeader();
-  static void resetFilePosition();
-  static bool hasMoreSamples();
-  static uint8_t readSample();
 };
