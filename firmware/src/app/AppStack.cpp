@@ -7,6 +7,7 @@
 
 #include "app/AppStack.h"
 
+#include "app/system/deviceinfo/DeviceInfo.h"
 #include "app/system/launcher/Launcher.h"
 #include "app/system/netmanager/NetManager.h"
 #include "app/system/updatecenter/UpdateCenter.h"
@@ -20,6 +21,7 @@
 static Launcher launcher;
 static NetManager netManager;
 static UpdateCenter updateCenter;
+static DeviceInfo deviceInfo;
 
 // Kullanıcı Uygulamaları
 static App1 app1;
@@ -30,6 +32,7 @@ IApplication *AppStack::sysApps[] = {
     &launcher,
     &netManager,
     &updateCenter,
+    &deviceInfo,
 };
 
 // Kullanıcı Uygulamaları Listesi
