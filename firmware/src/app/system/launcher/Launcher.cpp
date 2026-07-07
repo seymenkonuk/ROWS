@@ -29,7 +29,7 @@ void Launcher::onEnter() {
   // Sistem Uygulamaları Menüsünde Başlat
   currentAppType = 1;
   currentAppIndex = &usrAppIndex;
-  maxCurrentAppCount = USR_APP_COUNT;
+  maxCurrentAppCount = AppStack::USR_APP_COUNT;
   getApp = AppStack::getUsrApp;
 }
 
@@ -56,12 +56,12 @@ void Launcher::update(uint32_t deltaTime) {
     if (currentAppType == 0) {
       currentAppType = 1;
       currentAppIndex = &usrAppIndex;
-      maxCurrentAppCount = USR_APP_COUNT;
+      maxCurrentAppCount = AppStack::USR_APP_COUNT;
       getApp = AppStack::getUsrApp;
     } else {
       currentAppType = 0;
       currentAppIndex = &sysAppIndex;
-      maxCurrentAppCount = SYS_APP_COUNT;
+      maxCurrentAppCount = AppStack::SYS_APP_COUNT;
       getApp = AppStack::getSysApp;
     }
     isDirty = true;

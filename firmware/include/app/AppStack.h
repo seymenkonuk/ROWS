@@ -10,13 +10,12 @@
 // INCLUDES
 #include "app/IApplication.h"
 
-// DEFINES
-#define SYS_APP_COUNT 1
-#define USR_APP_COUNT 3
-
 // CLASSES
 class AppStack {
 public:
+  static const uint32_t SYS_APP_COUNT;
+  static const uint32_t USR_APP_COUNT;
+
   static IApplication *getSysApp(uint32_t index);
   static IApplication *getUsrApp(uint32_t index);
 

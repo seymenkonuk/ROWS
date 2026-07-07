@@ -33,6 +33,11 @@ IApplication *AppStack::usrApps[] = {
     &app2,
 };
 
+// Uygulama Adetleri
+const size_t AppStack::SYS_APP_COUNT = sizeof(sysApps) / sizeof(sysApps[0]);
+const size_t AppStack::USR_APP_COUNT = sizeof(usrApps) / sizeof(usrApps[0]);
+
+// Sistem Uygulamasını Getir
 IApplication *AppStack::getSysApp(uint32_t index) {
   if (index >= SYS_APP_COUNT) {
     LOG_ERROR("Parameter error: index out of bounds (index: %u, max: %u)", index, SYS_APP_COUNT);
@@ -41,6 +46,7 @@ IApplication *AppStack::getSysApp(uint32_t index) {
   return sysApps[index];
 }
 
+// Kullanıcı Uygulamasını Getir
 IApplication *AppStack::getUsrApp(uint32_t index) {
   if (index >= USR_APP_COUNT) {
     LOG_ERROR("Parameter error: index out of bounds (index: %u, max: %u)", index, USR_APP_COUNT);
