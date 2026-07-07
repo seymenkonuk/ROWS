@@ -9,6 +9,7 @@
 
 #include "app/system/launcher/Launcher.h"
 #include "app/system/netmanager/NetManager.h"
+#include "app/system/updatecenter/UpdateCenter.h"
 
 #include "app/user/app1/App1.h"
 #include "app/user/app2/App2.h"
@@ -18,6 +19,7 @@
 // Sistem Uygulamaları
 static Launcher launcher;
 static NetManager netManager;
+static UpdateCenter updateCenter;
 
 // Kullanıcı Uygulamaları
 static App1 app1;
@@ -27,6 +29,7 @@ static App2 app2;
 IApplication *AppStack::sysApps[] = {
     &launcher,
     &netManager,
+    &updateCenter,
 };
 
 // Kullanıcı Uygulamaları Listesi
