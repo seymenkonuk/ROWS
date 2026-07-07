@@ -261,7 +261,7 @@ Oyun alanında iki zemin türü bulunur:
 
 ## Gelecek Planları
 
-- [ ] Cihaz içerisine Ayarlar uygulaması eklenmesi
+- [X] Cihaz içerisine Ayarlar uygulaması eklenmesi
 - [ ] Yazılımsal 3D render desteği
 - [ ] Yerel ve çevrim içi multiplayer desteği
 - [ ] Daha fazla sistem ve kullanıcı uygulamaları
