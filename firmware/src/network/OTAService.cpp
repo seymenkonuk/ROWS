@@ -22,39 +22,39 @@ void OTAService::init() {
   currentSoftwareVersion = Filesystem::read("/info/VERSION");
 }
 
-bool OTAService::check() {
+SoftwareUpdateState OTAService::check() {
   LOG_INFO("Checking for updates...");
   String url = String(OTA_SERVICE_GET_NEW_VERSION_URL) + "?version=" + currentSoftwareVersion;
   APIResponse res = APIClient::get(url);
   // Bağlantı veya Sunucu Hatası
   if (res.isError() || res.statusCode != 200) {
     LOG_ERROR("Update check failed: Invalid response from server");
-    return false;
+    return SoftwareUpdateState::Failed;
   }
   // Yeni Güncelleme Yok
   if (res.body == currentSoftwareVersion) {
     LOG_INFO("No update available.");
-    return false;
+    return SoftwareUpdateState::NoUpdate;
   }
   // Güncelleme Mevcut
   newSoftwareVersion = res.body;
   LOG_INFO("Update found: version %s", newSoftwareVersion.c_str());
-  return true;
+  return SoftwareUpdateState::UpdateAvailable;
 }
 
-bool OTAService::update() {
+SoftwareUpdateState OTAService::update() {
   LOG_INFO("Update in progress...");
   String url = String(OTA_SERVICE_GET_FIRMWARE_URL) + "?version=" + currentSoftwareVersion;
   // Sunucudan Güncellemeyi İste
   if (!APIClient::getStream(url, updateCallback)) {
-    return false;
+    return SoftwareUpdateState::Failed;
   }
   // Güncelleme Tamamlandı
   LOG_INFO("Update complete. Restarting...");
   Filesystem::write("/info/VERSION", newSoftwareVersion);
   delay(1000);
   ESP.restart();
-  return true;
+  return SoftwareUpdateState::Completed;
 }
 
 bool OTAService::updateCallback(const APIResponse &res) {

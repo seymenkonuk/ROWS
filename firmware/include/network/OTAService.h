@@ -23,12 +23,15 @@
 #define OTA_SERVICE_GET_NEW_VERSION_URL OTA_SERVICE_BASE_URL OTA_SERVICE_GET_NEW_VERSION_PATH
 #define OTA_SERVICE_GET_FIRMWARE_URL OTA_SERVICE_BASE_URL OTA_SERVICE_GET_FIRMWARE_PATH
 
+// ENUMS
+enum class SoftwareUpdateState { Idle, Checking, UpdateAvailable, Downloading, Completed, Failed, NoUpdate };
+
 // CLASSES
 class OTAService {
 public:
   static void init();
-  static bool check();
-  static bool update();
+  static SoftwareUpdateState check();
+  static SoftwareUpdateState update();
 
 private:
   static String currentSoftwareVersion;
