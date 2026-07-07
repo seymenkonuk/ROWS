@@ -109,3 +109,15 @@ bool Network::refreshAP() {
   // Açık Değilse Bir Şey Yapma
   return false;
 }
+
+String Network::wifiSSID() {
+  return Filesystem::read("/network/wifi/SSID");
+}
+
+String Network::apSSID() {
+  return Filesystem::read("/network/ap/SSID");
+}
+
+String Network::serverIP() {
+  return WiFi.softAPIP().toString();
+}

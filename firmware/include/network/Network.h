@@ -20,12 +20,15 @@ public:
   static bool toggleWifi();
   static bool refreshWifi();
   static bool isWifiConnected();
+  static String wifiSSID();
 
   static bool startAP();
   static bool stopAP();
   static bool toggleAP();
   static bool refreshAP();
   static bool isAPStarted();
+  static String apSSID();
+  static String serverIP();
 
 private:
   static bool wifiConnected;
