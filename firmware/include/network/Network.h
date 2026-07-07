@@ -14,9 +14,20 @@
 class Network {
 public:
   static bool init();
+
   static bool connectWifi();
   static bool disconnectWifi();
+  static bool toggleWifi();
+  static bool refreshWifi();
+  static bool isWifiConnected();
+
   static bool startAP();
   static bool stopAP();
-  static wl_status_t status();
+  static bool toggleAP();
+  static bool refreshAP();
+  static bool isAPStarted();
+
+private:
+  static bool wifiConnected;
+  static bool apStarted;
 };

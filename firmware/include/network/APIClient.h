@@ -8,8 +8,6 @@
 #pragma once
 
 // INCLUDES
-#include <HTTPClient.h>
-
 #include "network/APIResponse.h"
 
 // CLASSES

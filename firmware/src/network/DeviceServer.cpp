@@ -47,6 +47,17 @@ void DeviceServer::stop() {
   serverRunning = false;
 }
 
+void DeviceServer::toggle() {
+  if (serverRunning) {
+    return stop();
+  }
+  return start();
+}
+
+bool DeviceServer::isRunning() {
+  return serverRunning;
+}
+
 void DeviceServer::loop() {
   if (serverRunning) {
     server.handleClient();
@@ -86,7 +97,7 @@ void DeviceServer::handleHomePost() {
     Filesystem::write("/network/wifi/PASS", newWifiPass.c_str());
     wifiSSID = newWifiSSID;
     wifiPass = newWifiPass;
-    Network::connectWifi();
+    Network::refreshWifi();
   }
   // AP Bilgileri Değiştiyse, Yeni AP Başlat
   if (newApSSID != apSSID || newApPass != apPass) {
@@ -94,7 +105,7 @@ void DeviceServer::handleHomePost() {
     Filesystem::write("/network/ap/PASS", newApPass.c_str());
     apSSID = newApSSID;
     apPass = newApPass;
-    Network::startAP();
+    Network::refreshAP();
   }
   // PRG -> Post Redirect Get
   server.sendHeader("Location", "/");

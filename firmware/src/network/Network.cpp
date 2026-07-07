@@ -10,15 +10,14 @@
 #include "core/Logger.h"
 #include "core/system/Filesystem.h"
 
+bool Network::wifiConnected = false;
+bool Network::apStarted = false;
+
 bool Network::init() {
   LOG_INFO("Initializing network...");
   String hostname = String("ROWS-") + Filesystem::read("/certificates/CN");
   WiFi.setHostname(hostname.c_str());
   return WiFi.mode(WIFI_AP_STA);
-}
-
-wl_status_t Network::status() {
-  return WiFi.status();
 }
 
 bool Network::connectWifi() {
@@ -36,6 +35,7 @@ bool Network::connectWifi() {
   // Bağlanmaya Çalış
   LOG_INFO("Connecting to Wi-Fi: %s", ssid.c_str());
   WiFi.begin(ssid, pass);
+  wifiConnected = true;
   return true;
 }
 
@@ -54,15 +54,58 @@ bool Network::startAP() {
   // Bağlanmaya Çalış
   LOG_INFO("Starting Access Point: %s", ssid.c_str());
   WiFi.softAP(ssid, pass);
+  apStarted = true;
   return true;
 }
 
 bool Network::disconnectWifi() {
   LOG_INFO("Disconnecting from Wi-Fi...");
+  wifiConnected = false;
   return WiFi.disconnect(false);
 }
 
 bool Network::stopAP() {
   LOG_INFO("Stopping Access Point...");
+  apStarted = false;
   return WiFi.softAPdisconnect(false);
+}
+
+bool Network::isWifiConnected() {
+  return wifiConnected;
+}
+
+bool Network::isAPStarted() {
+  return apStarted;
+}
+
+bool Network::toggleWifi() {
+  if (wifiConnected) {
+    return disconnectWifi();
+  }
+  return connectWifi();
+}
+
+bool Network::toggleAP() {
+  if (apStarted) {
+    return stopAP();
+  }
+  return startAP();
+}
+
+bool Network::refreshWifi() {
+  // Bağlıysa Yenile
+  if (wifiConnected) {
+    return connectWifi();
+  }
+  // Bağlı Değilse Bir Şey Yapma
+  return false;
+}
+
+bool Network::refreshAP() {
+  // Açıksa Yenile
+  if (apStarted) {
+    return startAP();
+  }
+  // Açık Değilse Bir Şey Yapma
+  return false;
 }
