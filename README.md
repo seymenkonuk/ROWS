@@ -57,8 +57,8 @@ Taşınabilir oyun konsolu, ROWS için geliştirilen ilk kullanım senaryosudur.
 Repository'yi klonlayın:
 
 ```bash
-git clone https://github.com/seymenkonuk/ROWS.git
-cd ROWS
+git clone https://github.com/seymenkonuk/esp32-handheld-application-platform.git
+cd esp32-handheld-application-platform
 ```
 
 Geliştirme ortamında aşağıdaki araçların bulunması gerekir:
@@ -271,4 +271,4 @@ Oyun alanında iki zemin türü bulunur:
 
 ## Lisans
 
-Bu proje [MIT Lisansı](https://github.com/seymenkonuk/ROWS/blob/main/LICENSE) ile lisanslanmıştır.
+Bu proje [MIT Lisansı](https://github.com/seymenkonuk/esp32-handheld-application-platform/blob/main/LICENSE) ile lisanslanmıştır.
